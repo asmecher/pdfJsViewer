@@ -49,12 +49,14 @@
 	</header>
 
 	<script type="text/javascript">
-		// Creating iframe's src in JS instead of Smarty so that EZProxy-using sites can find our domain in $pdfUrl and do their rewrites on it.
-		$(document).ready(function() {ldelim}
-			var urlBase = "{$pluginUrl}/pdf.js/web/viewer.html?file=";
-			var pdfUrl = {$pdfUrl|json_encode};
-			$("#pdfCanvasContainer > iframe").attr("src", urlBase + encodeURIComponent(pdfUrl));
-		{rdelim});
+	// Creating iframe's src in JS instead of Smarty so that EZProxy-using sites can find our domain in $pdfUrl and do their rewrites on it.
+				$(document).ready(function() {ldelim}
+				var urlBase = "{$pluginUrl}/pdf.js/web/viewer.html?file=";
+				var pdfUrl = "{$pdfUrl}";
+				var encodedPdfUrl = encodeURIComponent(pdfUrl);
+				encodedPdfUrl = encodedPdfUrl.replace("https%3A%2F%2F", "https://").replace("http%3A%2F%2F", "http://");
+				$("#pdfCanvasContainer > iframe").attr("src", urlBase + encodedPdfUrl);
+				{rdelim});
 	</script>
 
 	<div id="pdfCanvasContainer" class="galley_view{if !$isLatestPublication} galley_view_with_notice{/if}">
